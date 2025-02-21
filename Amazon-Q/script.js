@@ -1,6 +1,12 @@
 let todos = [];
 
-// Load todos from JSON file
+/**
+ * Loads todos from a JSON file on the server
+ * @function loadTodos
+ * @description Fetches the todo list data from todos.json and updates the UI
+ * @returns {void}
+ * @throws {Error} When there's an error loading the todos
+ */
 function loadTodos() {
     fetch('todos.json')
         .then(response => response.json())
@@ -14,7 +20,13 @@ function loadTodos() {
         });
 }
 
-// Save todos to JSON file
+/**
+ * Saves the current todos array to the server
+ * @function saveTodos
+ * @description Sends the current todos array to the server for persistent storage
+ * @returns {void}
+ * @throws {Error} When there's an error saving the todos
+ */
 function saveTodos() {
     fetch('/save-todos', {
         method: 'POST',
@@ -28,7 +40,12 @@ function saveTodos() {
     .catch(error => console.error('Error saving todos:', error));
 }
 
-// Add new todo
+/**
+ * Adds a new todo item to the list
+ * @function addTodo
+ * @description Creates a new todo item from the input field, adds it to the todos array, and updates the UI
+ * @returns {void}
+ */
 function addTodo() {
     const todoInput = document.getElementById('todoInput');
     const todoText = todoInput.value.trim();
@@ -46,14 +63,25 @@ function addTodo() {
     }
 }
 
-// Delete todo
+/**
+ * Deletes a todo item from the list
+ * @function deleteTodo
+ * @param {number} id - The unique identifier of the todo item to delete
+ * @description Removes a todo item with the specified ID from the todos array and updates the UI
+ * @returns {void}
+ */
 function deleteTodo(id) {
     todos = todos.filter(todo => todo.id !== id);
     saveTodos();
     displayTodos();
 }
 
-// Display todos
+/**
+ * Renders the todo list in the UI
+ * @function displayTodos
+ * @description Clears and rebuilds the todo list HTML elements based on the current todos array
+ * @returns {void}
+ */
 function displayTodos() {
     const todoList = document.getElementById('todoList');
     todoList.innerHTML = '';
